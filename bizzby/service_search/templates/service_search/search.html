@@ -42,6 +42,7 @@
                         <p>{{ confirmation }}</p>
 
                         <!-- query the task -->
+                        {% if tasks %}
                         <form method="POST">
                             <p>Is it
                             {% for task in tasks %}
@@ -51,14 +52,14 @@
                             {% endfor %}
                             </p>
                         </form>
+                        {% endif %}
 
                         <!-- after querying task return price -->
                         {% if price %}
                             <p>Price: {{ price }}</p>
-                            <p>For a {{ service_provider }}.</p>
                         {% endif %}
 
-                    <!-- end of results card -->    
+                    <!-- end of results card -->
                     </div>
                     {% endif %}
                 </div>
