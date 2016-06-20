@@ -1,5 +1,8 @@
-from fuzzywuzzy import process
+from fuzzywuzzy import process as fuzzy_process
+import nltk
+import regex
 
+stopword_cache = nltk.corpus.stopwords.words("english")
 
 services = {
     'handyman': ['handyman','odd jobs', 'sealing', 'decorating'],
@@ -8,6 +11,17 @@ services = {
     'electrician': ['electrician', 'light switches', 'emergency electrician', 'sockets']
 }
 
+def remove_punctuation(text):
+    return regex.sub(ur"\p{P}+", "", text)
+
+def pre_process(query_string):
+    # remove punctuation and lowercase query
+    clean_string = remove_punctuation(query_string.lower())
+    # split on whitespace into words
+    clean_tokens = clean_string.split()
+    # remove stopwords (a, the, etc.)
+    query_words = [word for word in clean_tokens if word not in stopword_cache]
+    return query_words
 
 def fuzzy_match(query_string):
     """
@@ -20,11 +34,11 @@ def fuzzy_match(query_string):
         return None, None
 
     # lowercase the input
-    query_string = query_string.lowercase()
+    query_string = query_string.lower()
 
     # create a generator object and pass to fuzzywuzzy process
     generator_object = (service for sublist in services.values() for service in sublist)
-    result, _ = process.extractOne(query_string, generator_object) # currently don't care about second return arg (score)
+    result, _ = fuzzy_process.extractOne(query_string, generator_object) # currently don't care about second return arg (score)
 
     # if the result matches a broad service category
     if result in services.keys():

@@ -1,0 +1,71 @@
+{% load staticfiles %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+        <link rel="stylesheet" href="{% static 'service_search/css/search.css' %}"/>
+    </head>
+
+    <body>
+        <!-- nav bar -->
+        <nav>
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Service Finder</a>
+          </div>
+        </nav>
+
+        <!--page content -->
+        <div class="container">
+
+            <div class="service-search-section row">
+                <div class="section col s6 offset-s3">
+                    <!-- search form -->
+                    <form method="GET">
+                        <div class="input-field">
+                            <input type="search" name="query">
+                            <label for="query">
+                                Enter your desired service:
+                            </label>
+                        </div>
+                        <input type="submit" class="btn red lighten-2" value="Search" />
+                    </form>
+                </div>
+            </div>
+
+            <div class="service-search-section row">
+                <div class="section col s6 offset-s3">
+
+                    <!-- if search is input display results card-->
+                    {% if confirmation %}
+                    <div class="card-panel red lighten-2 white-text">
+                        <p>{{ confirmation }}</p>
+
+                        <!-- query the task -->
+                        <form method="POST">
+                            <p>Is it
+                            {% for task in tasks %}
+                                    {% csrf_token %}
+                                    <input class="btn red lighten-3" type="submit" value="{{ task }}" name="task"/>
+                                {% if forloop.last %}?{% else %} or {% endif %}
+                            {% endfor %}
+                            </p>
+                        </form>
+
+                        <!-- after querying task return price -->
+                        {% if price %}
+                            <p>Price: {{ price }}</p>
+                            <p>For a {{ service_provider }}.</p>
+                        {% endif %}
+
+                    <!-- end of results card -->    
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    </body>
+</html>
