@@ -10,7 +10,13 @@ pip install -r requirements.txt
 python scripts/nltk.py
 ```
 
-## Running interactively
+## Running locally
+```
+python manage.py runserver
+```
+Then visit 'localhost:8000' in your browser.
+
+## Running interactive algorithm
 
 Running `python match.py` from the command line will start an interactive version of the algorithm.
 
