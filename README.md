@@ -39,6 +39,11 @@ First we extract keywords form the query.
 Then compute bigrams, and trigrams from the query.
 We then search through a tree of services and tasks. We use the fuzzy matching described below to find the most similar node in the tree and then move down the tree and either return the price, or a list of options.
 
+# Limitiations
+- Currently is looking to provide services related to washing machine install/repair so only takes queries related to this
+- Query has to be quite similar to task stored in tree. (future work could perhaps use WordNet to find synonyms)
+- Currently can't look further ahead in the tree. I.e. if you search 'install new washing machine' it will still ask whether it's new or replace.
+
 ## Algorithm (fuzzy matching command line version)
 The current algorithm for matching query to category is a fairly simple one. It uses the fuzzywuzzy package to compute a score for the similarity between the query and each of the services and sub-services. The fuzzywuzzy package uses the Levenshtein edit distance to calculate the score.
 
