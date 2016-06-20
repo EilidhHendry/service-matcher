@@ -1,4 +1,4 @@
-This repo contains one potential solution to the problem of matching an input query to a service and sub-service.
+Contains one potential solution to the problem of matching an input query to a price for a service.
 
 ## Set up:
 
@@ -39,7 +39,7 @@ First we extract keywords form the query.
 Then compute bigrams, and trigrams from the query.
 We then search through a tree of services and tasks. We use the fuzzy matching described below to find the most similar node in the tree and then move down the tree and either return the price, or a list of options.
 
-# Limitiations
+## Limitiations
 - Currently is looking to provide services related to washing machine install/repair so only takes queries related to this
 - Query has to be quite similar to task stored in tree. (future work could perhaps use WordNet to find synonyms)
 - Currently can't look further ahead in the tree. I.e. if you search 'install new washing machine' it will still ask whether it's new or replace.
