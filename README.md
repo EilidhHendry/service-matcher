@@ -10,8 +10,9 @@ pip install -r requirements.txt
 python scripts/nltk.py
 ```
 
-## Running locally
+## Running django app locally
 ```
+cd bizzby
 python manage.py runserver
 ```
 Then visit 'localhost:8000' in your browser.
@@ -33,7 +34,12 @@ Type in the service you require, e.g. 'unblock drains'
 >>>You would like a plumber to unblock drains.
 ```
 
-## Algorithm (fuzzy matching)
+## Algorithm (fuzzy matching django version)
+First we extract keywords form the query.
+Then compute bigrams, and trigrams from the query.
+We then search through a tree of services and tasks. We use the fuzzy matching described below to find the most similar node in the tree and then move down the tree and either return the price, or a list of options.
+
+## Algorithm (fuzzy matching command line version)
 The current algorithm for matching query to category is a fairly simple one. It uses the fuzzywuzzy package to compute a score for the similarity between the query and each of the services and sub-services. The fuzzywuzzy package uses the Levenshtein edit distance to calculate the score.
 
 I settled on the fuzzywuzzy package after performing some simple benchmarking and observing that it was faster than the other potential approaches
@@ -42,7 +48,7 @@ Improvements in the future would address the limitations described below. Rather
 
 Other potential improvements include providing suggestions to users, and parsing the sentence to find keywords.
 
-## Limitations
+## Limitations (of command-line version)
 
 - Currently takes either broad service category (e.g. handyman, plumber, cleaner) OR sub service (e.g. odd jobs, decorating, deep clean), but not both at once.
 - If your query contains a word which identically matches a broad category then it will return the broad category and not match the sub category, e.g. "carpet cleaner" would match "cleaner" then give a follow up query for the sub category rather than returning "cleaner for carpet cleaning".
