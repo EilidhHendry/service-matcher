@@ -3,10 +3,11 @@ This repo contains one potential solution to the problem of matching an input qu
 ## Set up:
 
 ```
-git clone
+git clone git@github.com:EilidhHendry/service-matcher.git
 virtualenv venv
 . venv/bin/activate
 pip install -r requirements.txt
+python scripts/nltk.py
 ```
 
 ## Running interactively
